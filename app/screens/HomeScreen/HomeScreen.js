@@ -16,24 +16,24 @@ export default class HomeScreen extends React.Component {
 
 	render() {
 		return (
-			<View >
-				<View></View> 
-                <View>
-                    <Text style={styles.gastosTxt}>Ingresar Gasto:</Text>
+			<View style={styles.homeScreen}>
+				<View style={styles.logoView}></View> 
+                <View style={styles.formView}>
+                    <Text style={[styles.gastosTxt, styles.commonText]}>Ingresar Gasto:</Text>
                     <View>
-                        <Text >Fecha:</Text>                        
+                        <Text style={styles.commonText}>Fecha:</Text>                        
                         <TextInput value={this.state.date} 
                                     placeholder="Fecha" 
                                     onChangeText={(date) => {this.setState({date})}}/>
                     </View>
                     <View>
-                        <Text >Nombre:</Text>                                                
+                        <Text style={styles.commonText}>Nombre:</Text>                                                
                         <TextInput value={this.state.title} 
                                     placeholder="Nombre"
                                     onChangeText={(title) => {this.setState({title})}}/>
                     </View>
                     <View>
-                        <Text >Precio:</Text>                                                
+                        <Text style={styles.commonText}>Precio:</Text>                                                
                         <TextInput value={this.state.price} 
                                     placeholder="Precio"
                                     onChangeText={(price) => {this.setState({price})}}/>   
@@ -41,5 +41,9 @@ export default class HomeScreen extends React.Component {
                 </View> 
 			</View>
 		);
-	}
+    }
+    
+    sendDetailsToFirebase() {
+
+    }
 }
