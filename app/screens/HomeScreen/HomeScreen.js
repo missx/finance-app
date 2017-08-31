@@ -6,6 +6,7 @@ import { View,
     Image } from 'react-native';
 
 import styles from './HomeScreenStyle';
+import firebaseMethods from '../../lib/firebaseMethods';
 
 export default class HomeScreen extends React.Component {
 
@@ -19,6 +20,10 @@ export default class HomeScreen extends React.Component {
 
         this.sendDetailsToFirebase = this.sendDetailsToFirebase.bind(this);
     }
+
+    static navigationOptions = {
+		title: 'Finance App',
+	};
 
 	render() {
 		return (
@@ -61,7 +66,7 @@ export default class HomeScreen extends React.Component {
                 title: this.state.title,
                 price: this.state.price
             }
-            this.props.saveExpense(data);
+            firebaseMethods.saveExpense(data);
         } else {
             console.log('here');
             this.setState({
@@ -69,4 +74,6 @@ export default class HomeScreen extends React.Component {
             });
         }
     }
+
+    
 }

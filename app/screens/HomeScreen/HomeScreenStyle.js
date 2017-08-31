@@ -7,7 +7,10 @@ const styles = StyleSheet.create({
     },
     homeScreen: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+		backgroundColor: '#EA8888',
+		alignItems: 'center',
+		justifyContent: 'center',
     },
     logoView: {
         flex: 1,

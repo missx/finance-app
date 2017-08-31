@@ -1,46 +1,14 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import * as firebase from 'firebase';
+import { StackNavigator } from 'react-navigation';
 
 import HomeScreen from './app/screens/HomeScreen/HomeScreen';
+import HistoryComponent from './app/screens/HistoryScreen/HistoryScreen';
+import StatisticsComponent from './app/screens/StatisticsScreen/StatisticsScreen';
 
-// Initialize Firebase
-const firebaseConfig = {
-	apiKey: "AIzaSyDR_Sp3rE6_BGr6cwGkQJE4oQ9dwvNxBoc",
-	authDomain: "finance-app-4a5b0.firebaseapp.com",
-	databaseURL: "https://finance-app-4a5b0.firebaseio.com",
-	projectId: "finance-app-4a5b0",
-	storageBucket: "finance-app-4a5b0.appspot.com",
-messagingSenderId: "100418400779"
-};
-
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-const db = firebaseApp.database();
-
-export default class App extends React.Component {
-	render() {
-		return (
-			<View style={styles.container}>
-				<HomeScreen saveEntry={this.saveExpense}/>
-			</View>
-		);
-	}
-
-	saveExpense(data) {
-		db.ref('expenses').set({
-			date: data.date,
-			title: data.title,
-			price : data.price
-		});
-	}
-}
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#EA8888',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
+const App = StackNavigator({
+    Home: { screen: HomeScreen },
+    History: { screen: HistoryComponent },
+    Statistics: { screen: StatisticsComponent }
 });
+
+export default App;
