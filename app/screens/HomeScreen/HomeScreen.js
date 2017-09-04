@@ -4,18 +4,21 @@ import { View,
     TextInput, 
     Button, 
     Image } from 'react-native';
+import DatePicker from 'react-native-datepicker';
 
 import styles from './HomeScreenStyle';
 import firebaseMethods from '../../lib/firebaseMethods';
+import dateUtils from '../../lib/dateUtils';
+import { tealBlueColor } from '../../config/commonStyle/colors';
 
 export default class HomeScreen extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            date: '',
+            date: dateUtils.getTodaysDate(),
             title: '',
-            price: ''
+            price: '',
         };
 
         this.sendDetailsToFirebase = this.sendDetailsToFirebase.bind(this);
@@ -35,9 +38,30 @@ export default class HomeScreen extends React.Component {
                     <Text style={[styles.gastosTxt, styles.commonText]}>Ingresar Gasto:</Text>
                     <View>
                         <Text style={styles.commonText}>Fecha:</Text>                        
-                        <TextInput value={this.state.date} 
-                                    placeholder="Fecha" 
-                                    onChangeText={(date) => {this.setState({date})}}/>
+                        <DatePicker
+                            style={{width: 200}}
+                            date={this.state.date}
+                            mode="date"
+                            placeholder="Fecha"
+                            format="YYYY-MM-DD"
+                            minDate={dateUtils.addOrSubtractYears(this.state.date, 1, false)}
+                            maxDate={dateUtils.addOrSubtractYears(this.state.date, 1, true)}
+                            confirmBtnText="OK"
+                            cancelBtnText="Cancelar"
+                            showIcon={true}
+                            customStyles={{
+                                dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0
+                                },
+                                dateInput: {
+                                    borderColor: tealBlueColor
+                                }
+                            }}
+                            onDateChange={(date) => {this.setState({date: date})}}
+                      />
                     </View>
                     <View>
                         <Text style={styles.commonText}>Nombre:</Text>                                                

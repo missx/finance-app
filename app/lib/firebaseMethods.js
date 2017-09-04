@@ -26,6 +26,6 @@ saveExpense = (data) => {
     });
 }
 
-export const firebaseMethods = {
+export default firebaseMethods = {
     'saveExpense': saveExpense
 }
