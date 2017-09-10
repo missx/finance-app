@@ -11,6 +11,8 @@ import firebaseMethods from '../../lib/firebaseMethods';
 import dateUtils from '../../lib/dateUtils';
 import { tealBlueColor } from '../../config/commonStyle/colors';
 
+import FooterNavbarComponent from '../../components/FooterNavbarComponent/FooterNavbarComponent';
+
 export default class HomeScreen extends React.Component {
 
     constructor(props) {
@@ -79,6 +81,8 @@ export default class HomeScreen extends React.Component {
                     style={styles.btn}/>   
                     <Text>{this.state.error}</Text>             
                 </View> 
+                <FooterNavbarComponent />
+
 			</View>
 		);
     }

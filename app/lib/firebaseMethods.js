@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import uuidv1 from 'uuid/v1';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -19,7 +20,10 @@ const db = firebaseApp.database();
  * @param data (Object)
  */
 saveExpense = (data) => {
-    db.ref('expenses').set({
+
+    let id = uuidv1();
+
+    db.ref('expenses/' + id).set({
         date: data.date,
         title: data.title,
         price : data.price
