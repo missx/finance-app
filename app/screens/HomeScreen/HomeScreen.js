@@ -27,7 +27,7 @@ export default class HomeScreen extends React.Component {
     }
 
     static navigationOptions = {
-		title: 'Finance App',
+		title: 'Home',
 	};
 
 	render() {
@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
                     style={styles.btn}/>   
                     <Text>{this.state.error}</Text>             
                 </View> 
-                <FooterNavbarComponent />
+                <FooterNavbarComponent navigation={this.props.navigation}/>
 
 			</View>
 		);

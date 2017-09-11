@@ -14,10 +14,20 @@ export default class FooterNavbarComponent extends React.Component {
           selectedIndex: -1
         }
         this.goToOption = this.goToOption.bind(this);
+        
     }
 
     goToOption = (selectedIndex) => {
-        this.setState({selectedIndex})
+        const { navigate } = this.props.navigation;
+
+        this.setState({selectedIndex});
+        if (selectedIndex == 0) {
+            navigate('Statistics');
+        } else if (selectedIndex == 1) {
+            navigate('History');            
+        } else if (selectedIndex == 2) {
+            navigate('Statistics');            
+        }
     }
 
     render() {
