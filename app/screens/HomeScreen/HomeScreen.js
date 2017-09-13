@@ -5,6 +5,7 @@ import { View,
     Button, 
     Image } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import { FormLabel, FormInput } from 'react-native-elements'
 
 import styles from './HomeScreenStyle';
 import firebaseMethods from '../../lib/firebaseMethods';
@@ -39,9 +40,9 @@ export default class HomeScreen extends React.Component {
                 <View style={styles.formView}>
                     <Text style={[styles.gastosTxt, styles.commonText]}>Ingresar Gasto:</Text>
                     <View>
-                        <Text style={styles.commonText}>Fecha:</Text>                        
+                        <FormLabel>Fecha:</FormLabel>                        
                         <DatePicker
-                            style={{width: 200}}
+                            style={{width: '80%', alignSelf: 'center'}}
                             date={this.state.date}
                             mode="date"
                             placeholder="Fecha"
@@ -66,16 +67,14 @@ export default class HomeScreen extends React.Component {
                       />
                     </View>
                     <View>
-                        <Text style={styles.commonText}>Nombre:</Text>                                                
-                        <TextInput value={this.state.title} 
-                                    placeholder="Nombre"
-                                    onChangeText={(title) => {this.setState({title})}}/>
+                        <FormLabel>Nombre:</FormLabel>                                                
+                        <FormInput placeholder="Nombre"
+                                    onChangeText={(title) => {this.setState({title})}}></FormInput>
                     </View>
                     <View>
-                        <Text style={styles.commonText}>Precio:</Text>                                                
-                        <TextInput value={this.state.price} 
-                                    placeholder="Precio"
-                                    onChangeText={(price) => {this.setState({price})}}/>   
+                        <FormLabel>Precio:</FormLabel>                                                
+                        <FormInput placeholder="Precio"
+                                    onChangeText={(price) => {this.setState({price})}}></FormInput>   
                     </View> 
                     <Button onPress={this.sendDetailsToFirebase} title="Save"
                     style={styles.btn}/>   

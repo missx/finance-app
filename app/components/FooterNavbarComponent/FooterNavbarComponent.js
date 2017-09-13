@@ -22,7 +22,7 @@ export default class FooterNavbarComponent extends React.Component {
 
         this.setState({selectedIndex});
         if (selectedIndex == 0) {
-            navigate('Statistics');
+            navigate('Config');
         } else if (selectedIndex == 1) {
             navigate('History');            
         } else if (selectedIndex == 2) {
@@ -48,7 +48,7 @@ export default class FooterNavbarComponent extends React.Component {
         const { selectedIndex } = this.state;
         
         return (
-            <View >
+            <View style={styles.footerNavbar}>
                 <ButtonGroup
                     onPress={this.goToOption}
                     selectedIndex={selectedIndex}

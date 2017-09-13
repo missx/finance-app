@@ -3,13 +3,14 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 
     footerNavbar: {
-        flexDirection: 'row'
+        alignSelf: 'center'
     },
     buttonGrp: {
         height: 55,
-        alignItems: "stretch",
         width: "100%",
-        marginBottom: 0
+        marginBottom: 0,
+        padding: 0,
+        
     }
 });
 

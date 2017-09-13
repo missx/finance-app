@@ -30,6 +30,17 @@ saveExpense = (data) => {
     });
 }
 
+/**
+ * Gets all expenses
+ * @return list of objects
+ */
+getAllExpenses = () => {
+    let expenses = db.ref('expenses');
+    console.log(JSON.parse(expenses));
+    return expenses;
+}
+
 export default firebaseMethods = {
-    'saveExpense': saveExpense
+    'saveExpense': saveExpense,
+    'getAllExpenses': getAllExpenses
 }
