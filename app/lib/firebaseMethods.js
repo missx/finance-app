@@ -35,8 +35,11 @@ saveExpense = (data) => {
  * @return list of objects
  */
 getAllExpenses = () => {
-    let expenses = db.ref('expenses');
-    console.log(JSON.parse(expenses));
+    let expenses;
+     db.ref('expenses').once('value').then(function(snapshot) {
+        expenses = snapshot.val(); 
+        console.log(expenses);
+    });
     return expenses;
 }
 
