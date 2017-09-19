@@ -35,12 +35,21 @@ saveExpense = (data) => {
  * @return list of objects
  */
 getAllExpenses = () => {
-    let expenses;
-     db.ref('expenses').once('value').then(function(snapshot) {
-        expenses = snapshot.val(); 
-        console.log(expenses);
+    let expenses = [];
+    
+    return new Promise((resolve, reject) => {
+        try {
+            db.ref('expenses').once('value').then(function(snapshot) {
+                snapshot.forEach(childSnap => {
+                    expenses.push(childSnap.val());
+                });
+                resolve(expenses);
+            });
+        } catch (err) {
+            reject(err);
+        }
     });
-    return expenses;
+    
 }
 
 export default firebaseMethods = {
