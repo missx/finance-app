@@ -20,12 +20,10 @@ export default class StatisticsScreen extends React.Component {
 	componentDidMount() {
 		let exps = [];
 		firebaseMethods.getAllExpenses().then(result => {
-			
 			console.log(result);
 			this.setState({
 				expenses: result
 			});	
-			console.log(typeof this.state.expenses);
 		}).catch (err => {
 			exps = [];
 			this.setState({
