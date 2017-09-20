@@ -31,6 +31,49 @@ saveExpense = (data) => {
 }
 
 /**
+ * Saves a category
+ * @param category (String)
+ * @return firebase reference
+ */
+saveNewCategory = (category) => {
+
+    return new Promise((resolve, reject) => {
+        let currentCategories = [];
+        this.getCategories().then(res => {
+            currentCategories = res;
+            let exists = false;
+
+            if (currentCategories.length > 0) {
+                var currentCat = currentCategories.filter((val, i) => {
+                    return val.toLowerCase() === category.toLowerCase();
+                });
+
+                if (currentCat.length > 0) exists = true;
+            }
+
+            if (!exists) {
+                try {
+                    db.ref('categories/').push({
+                        category: category
+                    }).then(res => {
+                        if (res.key) {
+                            resolve(res.key);
+                        } else {
+                            reject(res);
+                        }
+                    });
+                } catch(err) {
+                    reject(err);
+                }
+            }
+        }).catch(err =>{
+            reject(err);            
+        });
+    });
+    
+}
+
+/**
  * Gets all expenses
  * @return list of objects
  */
@@ -49,10 +92,71 @@ getAllExpenses = () => {
             reject(err);
         }
     });
+}
+
+/**
+ * Get all categories
+ * @return Promise with list of Strings (categories)
+ */
+getCategories = () => {
+    let categories = [];
     
+    return new Promise((resolve, reject) => {
+        try {
+            db.ref('categories').once('value').then(function(snapshot) {
+                snapshot.forEach(childSnap => {
+                    categories.push(childSnap.val().category);
+                });
+                resolve(categories);
+            });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+/**
+ * Removes a category
+ * @param cat (String)
+ * @return Promise indicating success
+ */
+removeCategory = (cat) => {
+    let catFromDB;
+    
+    return new Promise((resolve, reject) => {
+        //get category
+        db.ref('categories')
+            .startAt(cat)
+            .endAt(cat)
+            .once('value', function(snap) {
+ console.log("snap ", snap);
+                catFromDB = snap.key;
+ console.log("catFromDB ", catFromDB);
+        }).then(() =>{
+            if (catFromDB) {
+                try {
+                    db.ref('categories').remove(catFromDB).then((res) => {
+                        console.log('removed', res);
+                        resolve(true);
+                    }, (err) => {
+                        console.log('removed', err);  
+                        resolve('Could not delete category');                     
+                    });
+                } catch (err) {
+                    console.log('removed', err);
+                    reject(err);                    
+                }
+            } else {
+                reject('Category doesn\'t exist');
+            }
+        });
+    });
 }
 
 export default firebaseMethods = {
     'saveExpense': saveExpense,
-    'getAllExpenses': getAllExpenses
+    'saveNewCategory': saveNewCategory,
+    'getAllExpenses': getAllExpenses,
+    'getCategories': getCategories,
+    'removeCategory': removeCategory
 }
