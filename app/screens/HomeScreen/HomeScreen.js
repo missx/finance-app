@@ -22,9 +22,27 @@ export default class HomeScreen extends React.Component {
             date: dateUtils.getTodaysDate(),
             title: '',
             price: '',
+            category: '',
+            allCategories: '',
+            error: ''
         };
 
         this.sendDetailsToFirebase = this.sendDetailsToFirebase.bind(this);
+    }
+
+    componentDidMount() {
+        firebaseMethods.getCategories().then(res => {
+            if (res) {
+ console.log("res ", res);
+                this.setState({
+                    allCategories: res
+                });
+            }
+        }, err => {
+            this.setState({
+                error: err
+            });
+        });
     }
 
     static navigationOptions = {
@@ -33,10 +51,7 @@ export default class HomeScreen extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.homeScreen}>
-				<View style={styles.logoView}>
-                    <Image source={require('../../images/Finance_App.png')} style={styles.logo}/>
-                </View> 
+			<View style={styles.homeScreen}> 
                 <View style={styles.formView}>
                     <Text style={[styles.gastosTxt, styles.commonText]}>Ingresar Gasto:</Text>
                     <View>

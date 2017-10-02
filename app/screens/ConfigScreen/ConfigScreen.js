@@ -51,20 +51,31 @@ export default class ConfigScreen extends React.Component {
 	}
 
 	addCategory() {
-		firebaseMethods.saveNewCategory(this.state.newCategory)
-		.then(res => {
-			this.setState({
-				categories: this.state.categories.concat(this.state.newCategory),
-				newCategory: ''
-			});
-		}, err => {
-			this.setState({
-				error: err.toString(),
-				newCategory: ''
-			});
+
+		let exists = this.state.categories.find((cat, i) => {
+			return this.state.newCategory.toLowerCase() == cat.toLowerCase();
 		});
+
+		if (!exists) {
+			firebaseMethods.saveNewCategory(this.state.newCategory)
+			.then(res => {
+				this.setState({
+					categories: this.state.categories.concat(this.state.newCategory),
+					newCategory: ''
+				});
+			}, err => {
+				this.setState({
+					error: err.toString(),
+					newCategory: ''
+				});
+			});
 		
-		this.toggleModalVisible();
+			this.toggleModalVisible();
+		} else {
+			this.setState({
+				error: 'Category already exists'
+			});
+		}
 	}
 
 	toggleModalVisible() {

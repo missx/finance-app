@@ -39,38 +39,20 @@ saveNewCategory = (category) => {
 
     return new Promise((resolve, reject) => {
         let currentCategories = [];
-        this.getCategories().then(res => {
-            currentCategories = res;
-            let exists = false;
-
-            if (currentCategories.length > 0) {
-                var currentCat = currentCategories.filter((val, i) => {
-                    return val.toLowerCase() === category.toLowerCase();
-                });
-
-                if (currentCat.length > 0) exists = true;
-            }
-
-            if (!exists) {
-                try {
-                    db.ref('categories/').push({
-                        category: category
-                    }).then(res => {
-                        if (res.key) {
-                            resolve(res.key);
-                        } else {
-                            reject(res);
-                        }
-                    });
-                } catch(err) {
-                    reject(err);
+        try {
+            db.ref('categories/' + category).set({
+                category: category
+            }, (err) => {
+                if (err) {
+                    reject(false);
+                } else {
+                    resolve(true);                    
                 }
-            }
-        }).catch(err =>{
-            reject(err);            
-        });
+            });
+        } catch(err) {
+            reject(err);
+        }
     });
-    
 }
 
 /**
@@ -105,6 +87,7 @@ getCategories = () => {
         try {
             db.ref('categories').once('value').then(function(snapshot) {
                 snapshot.forEach(childSnap => {
+ console.log("childSnap ", childSnap);
                     categories.push(childSnap.key);
                 });
                 resolve(categories);

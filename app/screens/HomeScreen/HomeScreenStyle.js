@@ -11,25 +11,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
 		alignSelf: 'center'            
     },
-    logoView: {
-        flex: 1,
-        justifyContent: 'center',
-		alignItems: 'center'    
-    },
     formView: {
-        flex: 1
+        flex: 1,
+        padding: 20
     },
     commonText: {
         color: textPrimaryColor
     },
     btn: {
         backgroundColor: "#388697"
-    },
-    logo: {
-        height: 150,
-        width: 150,
-        justifyContent: 'center'
-        
     },
     
 });
