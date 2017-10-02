@@ -78,19 +78,23 @@ export default class ConfigScreen extends React.Component {
 	}
 
 	removeCategory(cat) {
- console.log("cat ", cat);
-		firebaseMethods.removeCategory(cat).then((res) = {
-			if (res) {
- console.log("res ", res);
-				this.setState({
-					categories: this.state.categories.filter((val, i) => { return val === cat; })
-				});
-			}
-		}, (err) => {
-			this.setState({
-				error: err
-			});
+		let catExists = this.state.categories.find((currentCat, i) => {
+			return currentCat.toLowerCase() == cat.toLowerCase();
 		});
+	
+		if (catExists) {
+			firebaseMethods.removeCategory(cat).then(res => {
+				if (res) {
+					this.setState({
+						categories: this.state.categories.filter((val, i) => { return val !== cat; })
+					});
+				}
+			}, (err) => {
+				this.setState({
+					error: err
+				});
+			});
+		}
 	}
 
 	render() {

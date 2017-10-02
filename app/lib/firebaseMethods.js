@@ -105,7 +105,7 @@ getCategories = () => {
         try {
             db.ref('categories').once('value').then(function(snapshot) {
                 snapshot.forEach(childSnap => {
-                    categories.push(childSnap.val().category);
+                    categories.push(childSnap.key);
                 });
                 resolve(categories);
             });
@@ -124,32 +124,13 @@ removeCategory = (cat) => {
     let catFromDB;
     
     return new Promise((resolve, reject) => {
-        //get category
-        db.ref('categories')
-            .startAt(cat)
-            .endAt(cat)
-            .once('value', function(snap) {
- console.log("snap ", snap);
-                catFromDB = snap.key;
- console.log("catFromDB ", catFromDB);
-        }).then(() =>{
-            if (catFromDB) {
-                try {
-                    db.ref('categories').remove(catFromDB).then((res) => {
-                        console.log('removed', res);
-                        resolve(true);
-                    }, (err) => {
-                        console.log('removed', err);  
-                        resolve('Could not delete category');                     
-                    });
-                } catch (err) {
-                    console.log('removed', err);
-                    reject(err);                    
-                }
-            } else {
-                reject('Category doesn\'t exist');
-            }
-        });
+        try {
+            db.ref('categories/' + cat).remove().then(() => {
+                resolve(true);                  
+            });
+        } catch (err) {
+            reject(err);                    
+        }
     });
 }
 
