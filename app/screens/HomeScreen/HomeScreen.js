@@ -5,7 +5,8 @@ import { View,
     Button, 
     Image } from 'react-native';
 import DatePicker from 'react-native-datepicker';
-import { FormLabel, FormInput } from 'react-native-elements'
+import { FormLabel, FormInput } from 'react-native-elements';
+import ModalPicker from 'react-native-modal-picker';
 
 import styles from './HomeScreenStyle';
 import firebaseMethods from '../../lib/firebaseMethods';
@@ -22,9 +23,27 @@ export default class HomeScreen extends React.Component {
             date: dateUtils.getTodaysDate(),
             title: '',
             price: '',
+            category: '',
+            allCategories: [],
+            error: ''
         };
 
         this.sendDetailsToFirebase = this.sendDetailsToFirebase.bind(this);
+        this.updateCategory = this.updateCategory.bind(this);
+    }
+
+    componentDidMount() {
+        firebaseMethods.getCategories().then(res => {
+            if (res) {
+                this.setState({
+                    allCategories: res
+                });
+            }
+        }, err => {
+            this.setState({
+                error: err
+            });
+        });
     }
 
     static navigationOptions = {
@@ -32,11 +51,22 @@ export default class HomeScreen extends React.Component {
 	};
 
 	render() {
+        let pickerItems = [
+            {
+                key: 0,
+                label: 'Category'
+            }
+        ]
+        let moreItems = this.state.allCategories.map((cat, i) => {
+            return {
+                key: i,
+                label: cat
+            }
+        });
+        pickerItems.concat(moreItems);
+          
 		return (
-			<View style={styles.homeScreen}>
-				<View style={styles.logoView}>
-                    <Image source={require('../../images/Finance_App.png')} style={styles.logo}/>
-                </View> 
+			<View style={styles.homeScreen}> 
                 <View style={styles.formView}>
                     <Text style={[styles.gastosTxt, styles.commonText]}>Ingresar Gasto:</Text>
                     <View>
@@ -76,6 +106,12 @@ export default class HomeScreen extends React.Component {
                         <FormInput placeholder="Precio"
                                     onChangeText={(price) => {this.setState({price})}}></FormInput>   
                     </View> 
+                    <View style={styles.modalPicker}>
+                        <ModalPicker
+                            data={pickerItems}
+                            initValue="Select a category"
+                            onChange={(option)=>{this.updateCategory(option)}} />
+                    </View>
                     <Button onPress={this.sendDetailsToFirebase} title="Save"
                     style={styles.btn}/>   
                     <Text>{this.state.error}</Text>             
@@ -95,11 +131,16 @@ export default class HomeScreen extends React.Component {
             }
             firebaseMethods.saveExpense(data);
         } else {
-            console.log('here');
             this.setState({
                 error: 'All fields should be entered'
             });
         }
+    }
+
+    updateCategory(cat) {
+        this.setState({
+            category: cat
+        });
     }
 
     
