@@ -3,10 +3,12 @@ import { View,
     Text, 
     TextInput, 
     Button, 
-    Image } from 'react-native';
+    Image,
+    ScrollView,
+    Picker } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import { FormLabel, FormInput } from 'react-native-elements';
-import ModalPicker from 'react-native-modal-picker';
+import { Select, Option } from "react-native-chooser";
 
 import styles from './HomeScreenStyle';
 import firebaseMethods from '../../lib/firebaseMethods';
@@ -23,7 +25,7 @@ export default class HomeScreen extends React.Component {
             date: dateUtils.getTodaysDate(),
             title: '',
             price: '',
-            category: '',
+            category: 'Select category',
             allCategories: [],
             error: ''
         };
@@ -51,26 +53,19 @@ export default class HomeScreen extends React.Component {
 	};
 
 	render() {
-        let pickerItems = [
-            {
-                key: 0,
-                label: 'Category'
-            }
-        ]
-        let moreItems = this.state.allCategories.map((cat, i) => {
-            return {
-                key: i,
-                label: cat
-            }
+        
+        let selectOptions = this.state.allCategories.map((cat, i) => {
+            return (
+                <Option value={cat} key={i}>{cat}</Option>
+            )
         });
-        pickerItems.concat(moreItems);
-          
+        
 		return (
 			<View style={styles.homeScreen}> 
                 <View style={styles.formView}>
-                    <Text style={[styles.gastosTxt, styles.commonText]}>Ingresar Gasto:</Text>
+                    <Text style={[styles.gastosTxt, styles.commonText]}>Add Expense:</Text>
                     <View>
-                        <FormLabel>Fecha:</FormLabel>                        
+                        <FormLabel>Date:</FormLabel>                        
                         <DatePicker
                             style={{width: '80%', alignSelf: 'center'}}
                             date={this.state.date}
@@ -97,20 +92,23 @@ export default class HomeScreen extends React.Component {
                       />
                     </View>
                     <View>
-                        <FormLabel>Nombre:</FormLabel>                                                
+                        <FormLabel>Name:</FormLabel>                                                
                         <FormInput placeholder="Nombre"
                                     onChangeText={(title) => {this.setState({title})}}></FormInput>
                     </View>
                     <View>
-                        <FormLabel>Precio:</FormLabel>                                                
+                        <FormLabel>Price:</FormLabel>                                                
                         <FormInput placeholder="Precio"
                                     onChangeText={(price) => {this.setState({price})}}></FormInput>   
                     </View> 
-                    <View style={styles.modalPicker}>
-                        <ModalPicker
-                            data={pickerItems}
-                            initValue="Select a category"
-                            onChange={(option)=>{this.updateCategory(option)}} />
+                    <View style={styles.selectView}>
+                        <FormLabel>Category:</FormLabel> 
+                        <Select
+                            onSelect={this.updateCategory}
+                            defaultText={this.state.category}
+                            style={styles.selectCategoryBox}>
+                            {selectOptions}
+                        </Select>
                     </View>
                     <Button onPress={this.sendDetailsToFirebase} title="Save"
                     style={styles.btn}/>   
@@ -141,6 +139,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
             category: cat
         });
+        console.log(cat);
     }
 
     

@@ -21,11 +21,16 @@ const styles = StyleSheet.create({
     btn: {
         backgroundColor: "#388697"
     },
-    modalPicker: {
-        flex: 1,
-        justifyContent:'space-around',
-        padding:50
+    selectView: {
+        flex: 2
+    },
+    selectCategoryBox: {
+        width: '85%', 
+        marginTop: 20,
+        alignSelf: 'center',
+        borderColor: '#bfbfbf'
     }
+    
 });
 
 export default styles;
