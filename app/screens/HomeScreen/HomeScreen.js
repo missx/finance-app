@@ -121,11 +121,13 @@ export default class HomeScreen extends React.Component {
     }
     
     sendDetailsToFirebase() {
-        if (this.state.date != '' && this.state.title != '' && this.state.price != '') {
+        if (this.state.date !== '' && this.state.title !== '' 
+        && this.state.price !=='' && this.state.category !== '') {
             let data = {
                 date: this.state.date,
                 title: this.state.title,
-                price: this.state.price
+                price: this.state.price,
+                category: this.state.category
             }
             firebaseMethods.saveExpense(data);
         } else {
@@ -139,7 +141,6 @@ export default class HomeScreen extends React.Component {
         this.setState({
             category: cat
         });
-        console.log(cat);
     }
 
     

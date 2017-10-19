@@ -26,7 +26,8 @@ saveExpense = (data) => {
     db.ref('expenses/' + id).set({
         date: data.date,
         title: data.title,
-        price : data.price
+        price : data.price, 
+        category: data.category
     });
 }
 

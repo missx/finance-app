@@ -27,7 +27,58 @@ addOrSubtractYears = (date, numberOfYrs, adding) => {
     }
 }
 
+/**
+ * Returns the name of the month according to its number
+ * @param numberOfMonth (int)
+ * @return string
+ */
+getNameOfMonthAccordingToNumber = (numberOfMonth) => {
+    let nameOfMonth = '';
+    switch (numberOfMonth) {
+        case 0:
+            nameOfMonth = 'January';
+            break;
+        case 1:
+            nameOfMonth = 'February';
+            break;
+        case 2:
+            nameOfMonth = 'March';
+            break;
+        case 3:
+            nameOfMonth = 'April';
+            break;
+        case 4:
+            nameOfMonth = 'May';
+            break;
+        case 5:
+            nameOfMonth = 'June';
+            break;
+        case 6:
+            nameOfMonth = 'July';
+            break;
+        case 7:
+            nameOfMonth = 'August';
+            break;
+        case 8:
+            nameOfMonth = 'September';
+            break;
+        case 9:
+            nameOfMonth = 'October';
+            break;
+        case 10:
+            nameOfMonth = 'November';
+            break;
+        case 11:
+            nameOfMonth = 'December';
+            break;
+        default:
+            nameOfMonth = '';
+    }
+    return nameOfMonth;
+}
+
 export default dateUtils = {
     'getTodaysDate': getTodaysDate,
-    'addOrSubtractYears': addOrSubtractYears
+    'addOrSubtractYears': addOrSubtractYears,
+    'getNameOfMonthAccordingToNumber': getNameOfMonthAccordingToNumber
 }
