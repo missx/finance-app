@@ -93,12 +93,12 @@ export default class HomeScreen extends React.Component {
                     </View>
                     <View>
                         <FormLabel>Name:</FormLabel>                                                
-                        <FormInput placeholder="Nombre"
+                        <FormInput placeholder="Name"
                                     onChangeText={(title) => {this.setState({title})}}></FormInput>
                     </View>
                     <View>
                         <FormLabel>Price:</FormLabel>                                                
-                        <FormInput placeholder="Precio"
+                        <FormInput placeholder="Price"
                                     onChangeText={(price) => {this.setState({price})}}></FormInput>   
                     </View> 
                     <View style={styles.selectView}>

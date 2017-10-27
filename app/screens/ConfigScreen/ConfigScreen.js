@@ -21,7 +21,7 @@ export default class ConfigScreen extends React.Component {
 		super(props);
 
 		this.state = {
-			maxPerWeek: '',
+			maxPerMonth: '',
 			categories: [],
 			modalVisible: false,
 			newCategory: '',
@@ -141,10 +141,10 @@ export default class ConfigScreen extends React.Component {
 			<ScrollView style={styles.configScreen}>
 				{modal}
 				<View>
-					<FormLabel>Max spending per week:</FormLabel>
+					<FormLabel>Max spending per month:</FormLabel>
 					<FormInput 
-						placeholder="5000"
-						onChangeText={(maxPerWeek) => this.setState({maxPerWeek})}/>
+						placeholder="30000"
+						onChangeText={(maxPerMonth) => this.setState({maxPerMonth})}/>
 					<FormValidationMessage>Invalid input</FormValidationMessage>
 				</View>
 				<View>

@@ -71,7 +71,6 @@ export default class StatisticsScreen extends React.Component {
 	render() {
 		
 		let data = this.state.expensesPerMonth;
-		console.log(data);
 
 		let options = {
 			width: 300,
